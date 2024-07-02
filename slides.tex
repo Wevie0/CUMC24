@@ -1,0 +1,189 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+
+\usetheme{Madrid}
+\usecolortheme{beaver}
+
+%------------------------------------------------------------
+%This block of code defines the information to appear in the
+%Title page
+\title[Computational Proof Assistants] %optional
+{Computational Proof Assistants}
+
+% \subtitle{A short story}
+
+\author[Liu, Kevin] % (optional)
+{Kevin Liu}
+
+\institute[UBC] % (optional)
+
+\date[CUMC 2024] % (optional)
+{Canadian Undergraduate Mathematics Conference, July 2024}
+
+
+%End of title page configuration block
+%------------------------------------------------------------
+
+
+
+%------------------------------------------------------------
+%The next block of commands puts the table of contents at the 
+%beginning of each section and highlights the current section:
+
+% \AtBeginSection[]
+% {
+%   \begin{frame}
+%     \frametitle{Table of Contents}
+%     \tableofcontents[currentsection]
+%   \end{frame}
+% }
+%------------------------------------------------------------
+
+
+\begin{document}
+
+%The next statement creates the title page.
+\frame{\titlepage}
+
+
+%---------------------------------------------------------
+%This block of code is for the table of contents after
+%the title page
+\begin{frame}
+\frametitle{Table of Contents}
+\tableofcontents
+\end{frame}
+%---------------------------------------------------------
+
+
+\section{Introduction}
+
+%---------------------------------------------------------
+%Changing visivility of the text
+\begin{frame}
+\frametitle{Motivation}
+% This is a text in second frame. For the sake of showing an example.
+
+\begin{itemize}
+    \item Writing correct software is hard!
+    \item Theorem provers can ensure mathematical correctness of code (Compcert)
+    \item Formal verification is becoming widely used in industry for critical tasks (Microsoft, Intel)
+    \item Can formally prove many results in mathematics (4-color theorem)
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------
+
+
+%---------------------------------------------------------
+%Example of the \pause command
+\begin{frame}
+\frametitle{Coq}
+\begin{itemize}
+    \item Coq is an interactive proof assistant for formal verification
+    \item Developed in 1984 by INRIA (France)
+    \item Includes a programming language (Gallina) and can check proofs for correctness
+    \item Can ``extract" Coq proofs into OCaml or Haskell scripts
+\end{itemize}
+\end{frame}
+%---------------------------------------------------------
+
+\section{Example Coq Programs}
+
+\begin{frame}
+\frametitle{How Coq Works}
+    % Tactics and Goals
+\end{frame}
+
+\begin{frame}
+\frametitle{Cheatsheet}
+    % Reminder
+\end{frame}
+%---------------------------------------------------------
+%Highlighting text
+% \begin{frame}
+% \frametitle{Sample frame title}
+
+% In this slide, some important text will be
+% \alert{highlighted} because it's important.
+% Please, don't abuse it.
+
+% \begin{block}{Remark}
+% Sample text
+% \end{block}
+
+% \begin{alertblock}{Important theorem}
+% Sample text in red box
+% \end{alertblock}
+
+% \begin{examples}
+% Sample text in green box. The title of the block is ``Examples".
+% \end{examples}
+% \begin{proof}
+    
+% \end{proof}
+% \end{frame}
+%---------------------------------------------------------
+
+
+%---------------------------------------------------------
+%Two columns
+% \begin{frame}
+% \frametitle{Two-column slide}
+
+% \begin{columns}
+
+% \column{0.5\textwidth}
+% This is a text in first column.
+% $$E=mc^2$$
+% \begin{itemize}
+% \item First item
+% \item Second item
+% \end{itemize}
+
+% \column{0.5\textwidth}
+% This text will be in the second column
+% and on a second tought this is a nice looking
+% layout in some cases.
+% \end{columns}
+% \end{frame}
+%---------------------------------------------------------
+
+\section{The Curry-Howard Isomporhism}
+\begin{frame}
+\frametitle{The Curry-Howard Isomorphism}
+\begin{theorem}
+    % Mathematica
+\end{theorem}
+
+\begin{examples}
+    \begin{itemize}
+        \item $$A \implies B \equiv f: A \to B$$
+        %  f is the evidence transformer, A is evidence
+        \item $$A \wedge B \equiv (A, B)$$
+    \end{itemize}
+\end{examples}
+
+\begin{block}{Remark}
+    \begin{itemize}
+    \item Direct link between computation and logic
+    \item Programs (functions) are equivalent to Proofs
+    \item Proofs can be run!
+    \end{itemize}
+\end{block}
+\end{frame}
+
+\section{References}
+\begin{frame}
+\frametitle{References}
+    \begin{itemize}
+        \item \href{https://coq.inria.fr/}{Coq Website}
+        \item \href{https://github.com/coq/coq}{Coq GitHub}
+        \item \href{https://softwarefoundations.cis.upenn.edu/lf-current/toc.html}{Software Foundations}
+        \item \href{https://cel.hal.science/inria-00001173v6/document}{Coq in a Hurry}
+        \item \href{https://www.rocq.inria.fr/semdoc/Presentations/20150217_PierreMariePedrot.pdf}{Curry Howard for Dummies}
+        \item \href{https://cs3110.github.io/textbook/chapters/adv/curry-howard.html}{CS 3110 Textbook @ Cornell}
+    \end{itemize}
+\end{frame}
+
+\end{document}
