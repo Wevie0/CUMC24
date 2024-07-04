@@ -2,15 +2,12 @@ Inductive bool : Type :=
 | T
 | F.
 
-(* Bool is a type *)
-
 Definition negb (b : bool) : bool := 
-  match b with 
+  match b with (* Pattern matching syntax *)
   | T => F
   | F => T
   end.
 
-(* fn from bool to bool, pattern matching *)
 
 Definition andb (b1 : bool) (b2 : bool) : bool :=
   match b1 with 
@@ -18,34 +15,26 @@ Definition andb (b1 : bool) (b2 : bool) : bool :=
   | F => F
   end.
 
+
+Check andb : bool -> bool -> bool.
+
 Definition orb (b1 : bool) (b2 : bool) : bool :=
   match b1 with
   | T => T
   | F => b2
   end.
 
-
 Compute (negb F). 
 
 Compute (andb T F). 
 
-Check andb : bool -> bool -> bool.
-
-(* Takes 2 bool output 1 *)
 
 Module NatDef.
 
-Inductive nat : Type := 
-| O 
-| S (n : nat).
+Inductive nat : Type := (* Constructor                        *)
+| O                     (* A nat can either be O or S of n    *)
+| S (n : nat).          (* Only these two ways can form a nat *)
 
-(* O not 0 *)
-
-(* 
-    the constructor expression O belongs to the set nat;
-    if n is a constructor expression belonging to the set nat, then S n is also a constructor expression belonging to the set nat; and
-    constructor expressions formed in these two ways are the only ones belonging to the set nat.
- *)
 
 Definition pred (n : nat) : nat :=
   match n with
@@ -84,17 +73,13 @@ Fixpoint minus (n m: nat) : nat :=
 
 Compute (minus 3 1).
 
-(* Talk about tactics and goals *)
-
-Theorem plus_O_l : forall n : nat, 0 + n = n.
+Theorem plus_O_l : forall n : nat, 0 + n = n. (* Goal *)
 Proof.
-  intros n. simpl. reflexivity. Qed.
+  intros n. simpl. reflexivity. Qed. (* Tactics *)
 
 Theorem plus_O_r : forall n : nat, n + 0 = n.
 Proof.
   intros n. simpl. Fail reflexivity. Abort.
-
-(* Talk about the context *)
 
 Theorem plus_id : forall n m : nat, n = m -> n + n = m + m.
 Proof.
@@ -111,14 +96,23 @@ intros a b. destruct a.
 Qed.
 
 Theorem plus_O_r : forall n : nat, n + 0 = n.
-Proof. 
-  intros n. destruct n as [| n'].
-  - reflexivity.
-  - Abort.
-
-Theorem plus_O_r : forall n : nat, n + 0 = n.
 Proof.
   intros n. induction n as [| n' IHn'].
   - reflexivity.
   - simpl. rewrite -> IHn'. reflexivity.
+Qed.
+
+Lemma plus_n_Sm : forall n m : nat, S (n + m) = n + S m.
+Proof.
+  intros n m.
+  induction n as [| n' IHn'].
+  - reflexivity.
+  - simpl. rewrite -> IHn'. reflexivity.
+Qed.
+
+Theorem plus_comm : forall n m : nat, n + m = m + n.
+Proof.
+  intros n m. induction n as [| n' IHn'].
+  - simpl. rewrite plus_O_r. reflexivity.
+  - simpl. rewrite <- plus_n_Sm. rewrite IHn'. reflexivity.
 Qed.
