@@ -110,9 +110,20 @@ Proof.
   - simpl. rewrite -> IHn'. reflexivity.
 Qed.
 
+(* Provability is represented by evidence *)
+(* A => B requires an evidence transformer *)
+(* A proof is a program that manipulates evidence *)
+(* Function that takes in 2 integers and outputs evidence of comm. *)
 Theorem plus_comm : forall n m : nat, n + m = m + n.
 Proof.
   intros n m. induction n as [| n' IHn'].
   - simpl. rewrite plus_O_r. reflexivity.
   - simpl. rewrite <- plus_n_Sm. rewrite IHn'. reflexivity.
 Qed.
+
+Check plus_comm.
+Print plus_comm.
+
+Theorem plus_id' : forall n m : nat, forall E: n = m, n + n = m + m.
+Proof.
+  intros n m E. rewrite -> E. reflexivity. Qed.

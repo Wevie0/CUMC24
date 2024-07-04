@@ -66,9 +66,10 @@
 
 \begin{itemize}
     \item Writing correct software is hard!
-    \item Theorem provers can ensure mathematical correctness of code (Compcert)
-    \item Formal verification is becoming widely used in industry for critical tasks (Microsoft, Intel)
-    \item Can formally prove many results in mathematics (4-color theorem)
+    \item Theorem provers can ensure mathematical correctness of code (\href{https://compcert.org/}{Compcert})
+    \item Formal verification is becoming widely used in industry for critical tasks (\href{https://www.youtube.com/watch?v=GEsvGGp0jyQ}{Microsoft}, \href{https://www.cl.cam.ac.uk/~jrh13/slides/nijmegen-21jun02/slides.pdf}{Intel})
+    \item Can formally prove many results in mathematics (\href{https://github.com/coq-community/fourcolor}{4-color theorem})
+    \item \href{https://github.com/ccz181078/Coq-BB5}{Computation of BB(5)} (last week)!
 \end{itemize}
 \end{frame}
 
@@ -89,71 +90,19 @@
 %---------------------------------------------------------
 
 \section{Example Coq Programs}
-
 \begin{frame}
-\frametitle{How Coq Works}
-    % Tactics and Goals
+\frametitle{Example Coq Programs}
+    See VSCode!
 \end{frame}
-
-\begin{frame}
-\frametitle{Cheatsheet}
-    % Reminder
-\end{frame}
-%---------------------------------------------------------
-%Highlighting text
-% \begin{frame}
-% \frametitle{Sample frame title}
-
-% In this slide, some important text will be
-% \alert{highlighted} because it's important.
-% Please, don't abuse it.
-
-% \begin{block}{Remark}
-% Sample text
-% \end{block}
-
-% \begin{alertblock}{Important theorem}
-% Sample text in red box
-% \end{alertblock}
-
-% \begin{examples}
-% Sample text in green box. The title of the block is ``Examples".
-% \end{examples}
-% \begin{proof}
-    
-% \end{proof}
-% \end{frame}
-%---------------------------------------------------------
-
-
-%---------------------------------------------------------
-%Two columns
-% \begin{frame}
-% \frametitle{Two-column slide}
-
-% \begin{columns}
-
-% \column{0.5\textwidth}
-% This is a text in first column.
-% $$E=mc^2$$
-% \begin{itemize}
-% \item First item
-% \item Second item
-% \end{itemize}
-
-% \column{0.5\textwidth}
-% This text will be in the second column
-% and on a second tought this is a nice looking
-% layout in some cases.
-% \end{columns}
-% \end{frame}
-%---------------------------------------------------------
 
 \section{The Curry-Howard Isomporhism}
 \begin{frame}
 \frametitle{The Curry-Howard Isomorphism}
 \begin{theorem}
-    % Mathematica
+    \begin{itemize}
+        \item Types are propositions
+        \item Programs and proofs are the same
+    \end{itemize}
 \end{theorem}
 
 \begin{examples}
@@ -167,15 +116,26 @@
 \begin{block}{Remark}
     \begin{itemize}
     \item Direct link between computation and logic
-    \item Programs (functions) are equivalent to Proofs
     \item Proofs can be run!
     \end{itemize}
 \end{block}
 \end{frame}
 
+\begin{frame}[fragile]
+\frametitle{Another example}
+
+\begin{example}
+    Consider the function \begin{verbatim}
+    def map (x: A, y: A -> B):
+        return y(x) \end{verbatim} which has type $map: A \to (A \to B) \to B$. Thus, if we have evidence for $A$ and evidence for $A \implies B$, then we have evidence for $B$. (Modus ponens)
+        \newline
+        How can we know this works? Type checking!
+\end{example}
+\end{frame}
+
 \section{References}
 \begin{frame}
-\frametitle{References}
+\frametitle{References and Further Readings}
     \begin{itemize}
         \item \href{https://coq.inria.fr/}{Coq Website}
         \item \href{https://github.com/coq/coq}{Coq GitHub}
@@ -183,6 +143,7 @@
         \item \href{https://cel.hal.science/inria-00001173v6/document}{Coq in a Hurry}
         \item \href{https://www.rocq.inria.fr/semdoc/Presentations/20150217_PierreMariePedrot.pdf}{Curry Howard for Dummies}
         \item \href{https://cs3110.github.io/textbook/chapters/adv/curry-howard.html}{CS 3110 Textbook @ Cornell}
+        \item \href{https://youtu.be/SknxggwRPzU}{Computerphile video}
     \end{itemize}
 \end{frame}
 
