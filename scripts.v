@@ -1,58 +1,24 @@
-Inductive bool : Type :=
-| T
-| F.
-
-Definition negb (b : bool) : bool := 
-  match b with (* Pattern matching syntax *)
-  | T => F
-  | F => T
-  end.
-
-
-Definition andb (b1 : bool) (b2 : bool) : bool :=
-  match b1 with 
-  | T => b2
-  | F => F
-  end.
-
-
-Check andb : bool -> bool -> bool.
-
-Definition orb (b1 : bool) (b2 : bool) : bool :=
-  match b1 with
-  | T => T
-  | F => b2
-  end.
-
-Compute (negb F). 
-
-Compute (andb T F). 
+From Coq Require Export Bool.Bool.
+From Coq Require Export Arith.Arith.
+From Coq Require Export Arith.PeanoNat.
+From Coq Require Export Arith.EqNat.
+From Coq Require Export Lists.List.
+From Coq Require Export Permutation.
+Import ListNotations.
 
 
 Module NatDef.
 
-Inductive nat : Type := (* Constructor                        *)
-| O                     (* A nat can either be O or S of n    *)
-| S (n : nat).          (* Only these two ways can form a nat *)
+Inductive nat : Type := (* Constructor *)
+| O                     
+| S (n : nat).          
 
 
-Definition pred (n : nat) : nat :=
-  match n with
-  | O => O
-  | S n' => n'
-  end.
 
 End NatDef.
 
-Fixpoint even (n: nat) : bool :=
-  match n with 
-  | O => T
-  | S O => F
-  | S (S n') => even n'
-  end.
+Compute S (S O).
 
-Definition odd (n: nat) : bool :=
-  negb (even n).
 
 Fixpoint plus (n m: nat) : nat :=
   match n with 
@@ -64,15 +30,6 @@ Compute (plus 3 1).
 
 (* S (plus 2 1) => S (S (plus 1 1)) => S (S (S (plus 0 1))) => S (S (S (S O)))*)
 
-Fixpoint minus (n m: nat) : nat :=
-  match n, m with
-  | O, _ => O
-  | _, O => n
-  | S n', S m' => minus n' m'
-  end.
-
-Compute (minus 3 1).
-
 Theorem plus_O_l : forall n : nat, 0 + n = n. (* Goal *)
 Proof.
   intros n. simpl. reflexivity. Qed. (* Tactics *)
@@ -81,49 +38,80 @@ Theorem plus_O_r : forall n : nat, n + 0 = n.
 Proof.
   intros n. simpl. Fail reflexivity. Abort.
 
-Theorem plus_id : forall n m : nat, n = m -> n + n = m + m.
-Proof.
-  intros n m H. rewrite -> H. reflexivity. Qed.
-
-Theorem and_comm : forall a b, andb a b = andb b a.
-intros a b. destruct a.
-  - destruct b.
-    + simpl. reflexivity.
-    + simpl. reflexivity.
-  - destruct b.
-    + simpl. reflexivity.
-    + simpl. reflexivity.
-Qed.
-
 Theorem plus_O_r : forall n : nat, n + 0 = n.
 Proof.
   intros n. induction n as [| n' IHn'].
-  - reflexivity.
+  - simpl. reflexivity.
   - simpl. rewrite -> IHn'. reflexivity.
 Qed.
 
-Lemma plus_n_Sm : forall n m : nat, S (n + m) = n + S m.
+Theorem plus_n_Sm : forall n m : nat, S (n + m) = n + S m.
 Proof.
   intros n m.
   induction n as [| n' IHn'].
-  - reflexivity.
+  - simpl. reflexivity.
   - simpl. rewrite -> IHn'. reflexivity.
 Qed.
 
-(* Provability is represented by evidence *)
-(* A => B requires an evidence transformer *)
-(* A proof is a program that manipulates evidence *)
-(* Function that takes in 2 integers and outputs evidence of comm. *)
 Theorem plus_comm : forall n m : nat, n + m = m + n.
 Proof.
   intros n m. induction n as [| n' IHn'].
-  - simpl. rewrite plus_O_r. reflexivity.
-  - simpl. rewrite <- plus_n_Sm. rewrite IHn'. reflexivity.
+  - simpl. rewrite -> plus_O_r. reflexivity.
+  - simpl. rewrite <- plus_n_Sm. rewrite -> IHn'. reflexivity.
 Qed.
 
-Check plus_comm.
-Print plus_comm.
 
-Theorem plus_id' : forall n m : nat, forall E: n = m, n + n = m + m.
+
+
+
+
+
+Fixpoint insert (i : nat) (l : list nat) :=
+  match l with
+  | nil => [i]
+  | h :: t => if i <=? h then i :: h :: t else h :: insert i t
+  end.
+
+(* Insertion Sort! *)
+Fixpoint sort (l : list nat) : list nat :=
+  match l with
+  | nil => nil
+  | h :: t => insert h (sort t)
+  end.
+
+Example sort_pi :
+  sort [3;1;4;1;5;9;2;6;5;3;5]
+  = [1;1;2;3;3;4;5;5;5;6;9].
 Proof.
-  intros n m E. rewrite -> E. reflexivity. Qed.
+  reflexivity. Qed.
+
+
+(* Define sorted predicate *)
+Inductive sorted : list nat -> Prop :=
+| sorted_nil : sorted []
+| sorted_1 : forall x, sorted [x]
+| sorted_cons : forall x y: nat, forall l: list nat, x <= y -> sorted (y :: l) -> sorted (x :: y :: l).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lemma insert_sorted:
+  forall (a : nat) (l : list nat), sorted l -> sorted (insert a l).
+Proof. Admitted.
+
+Check insert_sorted.
+
+Theorem sort_sorted: forall l, sorted (sort l).
+Proof. induction l as [| h t IHl].
+  - simpl. constructor.
+  - simpl. apply insert_sorted. apply IHl. Qed.
