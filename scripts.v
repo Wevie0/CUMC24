@@ -6,6 +6,8 @@ From Coq Require Export Lists.List.
 From Coq Require Export Permutation.
 Import ListNotations.
 
+From Coq Require Export Extraction.
+
 
 Module NatDef.
 
@@ -115,3 +117,9 @@ Theorem sort_sorted: forall l, sorted (sort l).
 Proof. induction l as [| h t IHl].
   - simpl. constructor.
   - simpl. apply insert_sorted. apply IHl. Qed.
+
+Extraction Language Haskell.
+Recursive Extraction sort.
+
+Extraction Language Scheme.
+Recursive Extraction sort.
